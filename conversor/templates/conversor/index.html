@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Conversor binario</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'conversor/style.css' %}">
+</head>
+<body>
+  <main class="tarjeta">
+    <h1>Conversor binario a decimal / octal</h1>
+
+    <form method="post">
+      {% csrf_token %}
+      <label for="binario">Número binario:</label>
+      <input id="binario" name="binario" value="{{ valor }}" placeholder="Ej. 110101" required>
+
+      <label for="tipo">Convertir a:</label>
+      <select id="tipo" name="tipo">
+        <option value="decimal" {% if tipo == "decimal" %}selected{% endif %}>Decimal</option>
+        <option value="octal" {% if tipo == "octal" %}selected{% endif %}>Octal</option>
+      </select>
+
+      <button type="submit">Convertir</button>
+    </form>
+
+    {% if error %}
+      <p class="error">{{ error }}</p>
+    {% endif %}
+
+    {% if resultado is not None %}
+      <p>Número original: <strong>{{ valor }}</strong></p>
+      <p>Cantidad de dígitos: <strong>{{ cantidad_digitos }}</strong></p>
+      <p>Tipo: <strong>{{ tipo }}</strong></p>
+      <p>Resultado: <strong>{{ resultado }}</strong></p>
+    {% endif %}
+  </main>
+</body>
+</html>
